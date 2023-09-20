@@ -62,6 +62,10 @@ Vue.createApp({
 
 例如：
 ```html
+{{ 'hello' + 'world' }}
+
+{{ 1 + 1 }}
+
 {{ number + 1 }}
 
 {{ ok ? 'YES' : 'NO' }}
@@ -90,9 +94,48 @@ Vue.createApp({
 }).mount("#app");
 ```
 
+另外補充一下哪些語法屬於不合法的語法：
+```html
+{{ var a = 1 }}
+
+{{ if (ok) { return message } }}
+```
+以上都算是不合法的語法，因為他們都不是「回傳值」，而是「宣告」或是「控制流程」。
+
+
+# 指令
+Vue 除了支援雙大括號的資料綁定語法之外，還有一種叫做「指令」的語法，通常長得像 v-XXX。 
+像是：`v-on`、`v-bind`、`v-model`、`v-if`、`v-for` 等等。
+
+而這些東西的寫法就會像 HTML 的屬性一樣，寫在 HTML 標籤中，例如：
+```html
+<div id="app">
+    <input type="text" v-model="message">
+    <div v-model="message"></div>
+</div>
+```
+```js
+Vue.createApp({
+    setup() {
+        const message = 'hello world'
+        return { message }
+    },
+}).mount("#app");
+```
+
+其中可能還會有一些縮寫，例如 `v-bind` 可以縮寫成 `:`，`v-on` 可以縮寫成 `@`，像這樣：
+```html
+<div id="app">
+    <div :class="classObject"></div>
+    <div @click="doSomething"></div>
+</div>
+```
+
+更詳細的使用方式，預計在後面的章節會再提到，這裡先記錄 Vue 的模板可以寫些什麼東西。
 
 
 # 總結
 1. Vue 使用「基於」HTML 的模板語法，只要是合法的 HTML 語法，都可以在 Vue 中撰寫。
 2. Vue 的資料綁定語法使用 Mustache 語法，寫法是雙大誇號(`{{}}`)，可以單獨出現在模版中，不一定要跟 HTML 標籤寫在一起。
 3. 在雙大誇號中，除了變數之外，也可以寫 JS 表達式。
+4. Vue 指令的寫法跟 HTML 屬性很像，通常長得像 `v-XXX`，例如 `v-on`、`v-bind`、`v-model`、`v-if`、`v-for` 等等。

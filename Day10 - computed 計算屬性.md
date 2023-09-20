@@ -150,7 +150,7 @@ createApp({
 持續點擊按鈕的過程，會發現 `hasBook_method` 都會被重新執行，但 `hasBook_computed` 不會！
 ![Alt text](image-6.png)
 
-# computed 的 get 跟 set
+# computed 的 getter 跟 setter
 
 上面的例子，我們都只有「Get」 computed 處理好的資料，沒有「Set」 這個資料。
 
@@ -197,12 +197,12 @@ const hasBook_computed = computed({
 });
 ```
 
-1. 把原本 computed 「函式」換成「物件」。
-2. 物件可以有兩個屬性，`get` 跟 `set`。
-3. `get` 跟 `set` 要設定的值，也都是「函式」。
-4. `get` 的值寫讀取 computed 要回傳的內容。
-5. `set` 的內容，寫如果「設定」computed 資料時要做的事情。
-6. `set` 可以使用一個參數，傳入「被設定的值」。
+1. 把原本 computed() 的內容從「函式」換成「物件」。
+2. 這個「物件」可以有兩個屬性，`get` 跟 `set`。
+3. `get` 跟 `set` 能設定的值，都是「函式」。
+4. `get` 的函式，就是最初的範例中， computed() 內的那個函式。
+5. `set` 的函式，用於「設定了 computed 資料」之後要做的事情。
+6. `set` 函式能帶一個參數，用來使用 computed 「被設定的值」。
 
 完整的程式大概是這樣，可以到[這裡](https://jsfiddle.net/imall/hx15zykL/10/)玩玩看：
 
@@ -246,11 +246,11 @@ createApp({
 </div>
 ```
 
-computed 的 set 語法能讓我們針對 computed 設定某個資料值，在取得資料值後，一般會在 set 方法中寫點邏輯。
+computed 的 setter 語法能讓我們針對 computed 設定某個資料值，在取得資料值後，一般會在 set 方法中寫點邏輯。
 
 不過也因為彈性變大的關係，官方有建議在 set 方法不要寫出有「副作用」的邏輯。
 
-所謂的副作用，意思是不要在 set 中操控跟這個變數本身沒關係的資料。
+所謂的副作用，意思是不要在 setter 中操控跟這個變數本身沒關係的資料。
 
 例如這樣的寫法：
 
@@ -271,7 +271,7 @@ createApp({
 }).mount("#app");
 ```
 
-以這個邏輯來說，hasBook 應該是跟 books 有關連的資料，卻在 set 之中，去設定其他無關緊要的資料，這就叫做「副作用」。
+以這個邏輯來說，hasBook 應該是跟 books 有關連的資料，卻在 setter 之中，去設定其他無關緊要的資料，這就叫做「副作用」。
 這樣的寫法很容易在出問題的時候，因為「沒想到問題會出在這」，增加 Debug 的難易度。
 
 
@@ -280,5 +280,5 @@ createApp({
 
 # 總結
 1. computed 計算屬性擅長於「資料」產出「資料」
-2. computed 會依據「相依性」的資料是否有變動，來決定要不要暫存資料。
-3. computed 也可以使用 get/set 語法，不過在 set 裡面不要寫出有副作用的內容。
+2. computed 會依據「相依性」的資料是否有變動，決定是否將計算結果進行快取緩存。
+3. computed 也可以使用 getter/setter 語法，不過在 set 裡面不要寫出有副作用的內容。
