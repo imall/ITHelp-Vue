@@ -56,6 +56,7 @@
 ```
 
 甚至你如果覺得那個 Vue 每次都要寫，也可以直接用 ES6 的語法把方法解構出來：
+
 ```js
     const { createApp } = Vue;
     const robot = createApp({
@@ -68,23 +69,27 @@
     robot.mount("#app");
 ```
 
+除了 createApp 之外，未來還會看到 ref 、生命週期鉤子等，使用前都需要先解構
+
 再更進階一點點點說，`createApp` 裡面的物件，也可以獨立出來：
 ```js
     const { createApp } = Vue;
+    // 直接把物件塞到某個變數
     const MyRobotComponent ={
         setup() {
             const message = '一段文字';.
             return { message }
         },
     }
+    // 再把這個變數塞到 createApp
     createApp(MyRobotComponent).mount("#app");
 ```
 以上的寫法都能做到一樣的事情，我知道新手常常因為換了個寫法，就看不懂在寫什麼，這邊列幾個簡單的語法重構給新手們參考。
 
 # 掛在 HTML 的名字，一定要叫 app 嗎？
-這其實應該是很多新手不會注意到的問題，反正別人怎麼寫，我照抄就是了
+這其實應該是很多新手不會注意到的問題，反正別人怎麼寫，照抄就是了
 
-不過其是那個 `#app` 是因為官網範例總是這麼寫，後來大家也就跟著它使用了，反正也不會影響到開發的功能。
+那個 `#app` 是因為官網範例總是這麼寫，後來大家也就跟著它使用了，實務上也不會影響到開發的功能。
 
 不過事實上 `mount` 內容只要是有辦法抓到 HTML 節點的選取器都可以使用，：
 ```html
@@ -97,7 +102,7 @@
     <div class="main-content">XXX</div>
     <div class="footer">© 鐵人賽 {{ Year }}</div>
 ```
-例子中， `mount` 是透過 `".footer"` 選到 HTML 節點，來掛 Vue 實體：
+例子中，`mount` 是透過 `".footer"` 選到 HTML 節點，來掛 Vue 實體：
 ```js
   Vue.createApp({
     setup() {
@@ -107,10 +112,12 @@
   }).mount(".footer");
 ```
 
+
+
 # 總結
 1. Vue 的核心，就是「宣告式渲染」、「元件系統」
 2. Vue 的實體，由 `createApp` 函式所建構
-3. 實體要掛到 HTML 上，透過 `createApp` 的 `mount` 方法
+3. 實體要掛到 HTML 上，是透過 `createApp` 的 `mount` 方法
 4. `mount` 方法不一定要用 `#app` ，只要能選到 HTML 節點的選取器都可以
 
 

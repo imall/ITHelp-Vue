@@ -12,7 +12,7 @@
 
 監聽器的概念，就像是監視器一般，時時刻刻的觀測著某個狀態，在狀態異動的時候要去做某些事情。
 
-如果是要監聽一個 ref() 、 computed 的資料，可以直接寫變數名稱，例如下面這樣：
+如果是要監聽一個 `ref()` 或 `computed` 的資料，可以這樣寫，例如下面這樣：
 
 ```js
 const { createApp, watch, ref } = Vue;
@@ -41,7 +41,9 @@ createApp({
     const question = ref("");
 
     watch(
+      // 監聽 answer 跟 question
       [answer, question],
+      // callback 第一個參數都是新值，第二個參數都是舊值
       ([newAnswer, newQuestion], [oldAnswer, oldQuestion]) => {
         console.log(`答案從 "${oldAnswer}" 變為 "${newAnswer}"`);
         console.log(`問題從 "${oldQuestion}" 變為 "${newQuestion}"`);

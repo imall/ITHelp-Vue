@@ -10,13 +10,14 @@
 
 # computed 計算屬性
 
-這個計算屬性如同 `ref()` 一樣，是 Vue 物件提供的方法，需要使用時，記得從 Vue 解構：
+這個計算屬性如同 `ref()` 一樣，是 Vue 物件提供的方法，需要使用時，記得從 Vue 解構，
+並且在使用時，需要用 `變數.value` 取值
 
 ```js
 const { computed } = Vue;
 ```
 
-引用官網的例子，我們想在畫面紀錄一份書本清單是否有資料。  
+舉例來說，需要針對一筆書本清單，判斷陣列裡面有沒有內容。  
 就是一個標準的透過「資料(書本清單)」產出「資料(是否有內容)」的例子。
 
 實際程式碼可能會長這樣：
@@ -175,7 +176,7 @@ createApp({
     });
 
     const plus = () => {
-      // 順便提一下，如果要在 JS 取用 computed 的值，跟 ref 一樣要 + .value
+      // 如果要在 JS 取用 computed 的值，跟 ref 一樣要 + .value
       hasBook_computed.value = "這是我亂改的資料";
     };
     const hasBook_computed = computed(() =>
